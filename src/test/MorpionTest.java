@@ -24,7 +24,7 @@ public class MorpionTest {
 		game.play("player1", "0x1");
 	}
 
-	@Test @Ignore
+	@Test
 	public void winner() {
 		Morpion game = new Morpion("3x3", "player1:X", "player2:O");
 		game.play("player1", "0x0");
@@ -32,10 +32,10 @@ public class MorpionTest {
 		game.play("player1", "1x1");
 		game.play("player2", "0x2");
 		game.play("player1", "2x2");
-		assertThat("Game Over, player1 is a winner", equalTo(game.report()));
+		assertThat(game.report(), equalTo("Game Over, player1 is a winner"));
 	}
 
-	@Test @Ignore
+	@Test
 	public void displayEqualityGame() {
 		Morpion game = new Morpion("3x3", "player1:X", "player2:O");
 		game.play("player1", "0x0");

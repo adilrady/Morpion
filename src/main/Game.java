@@ -1,10 +1,9 @@
 
-
 public class Game {
 
-    private Player [][] players;
-    
-    public Game(int gameDimension){
+    private Player[][] players;
+
+    public Game(int gameDimension) {
         initGame(gameDimension);
     }
 
@@ -17,32 +16,85 @@ public class Game {
         }
     }
 
-    public int getFreeGameCellCount(){
+    public int getFreeGameCellCount() {
         int freeCellCount = 0;
         for (int i = 0; i < players.length; i++) {
             for (int j = 0; j < players[i].length; j++) {
-                if(players[i][j] instanceof NullPlayer)
+                if (players[i][j] instanceof NullPlayer)
                     freeCellCount++;
             }
         }
         return freeCellCount;
     }
-    
-    public void play(Player player, String gameCell) {
-        int [] gameCellIndex = getGameCell(gameCell);
+
+    public Player play(Player player, String gameCell) {
+        int[] gameCellIndex = getGameCell(gameCell);
         int lineIndex = gameCellIndex[0];
         int columnIndex = gameCellIndex[1];
-        if(players[lineIndex][columnIndex] instanceof NullPlayer){
+        if (players[lineIndex][columnIndex] instanceof NullPlayer) {
             players[lineIndex][columnIndex] = player;
-        }else{
+        } else {
             throw new BoxAlreadySelectedException();
+        }
+        return getWinner(player);
+    }
+
+    private Player getWinner(Player player) {
+        if (hasCompleteDiagonal(player) || hasCompleteLine(player) || hasCompleteColumn(player)) {
+            
+            return player;
+        } else {
+            return new NullPlayer();
         }
     }
 
+    private boolean hasCompleteColumn(Player player) {
+
+        outerLoop:
+        for (int i = 0; i < players.length; i++) {
+            for (int j = 0; j < players[i].length; j++) {
+                if ( ! players[i][j].equals(player))
+                    continue outerLoop;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private boolean hasCompleteLine(Player player) {
+
+        outerLoop: 
+        for (int i = 0; i < players.length; i++) {
+            for (int j = 0; j < players[i].length; j++) {
+                if ( ! players[j][i].equals(player))
+                    continue outerLoop;
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean hasCompleteDiagonal(Player player) {
+        
+        for (int i = 0; i < players.length; i++) {
+            if(! players[i][i].equals(player)){
+                return false;
+            }
+        }
+        return true;
+        
+        //Second Diagonal to be moved to another method
+//        for (int i = 0; i < players.length; i++) {
+//            if(! players[i][players.length - 1 - i].equals(player)){
+//                return false;
+//            }
+//        }
+//        return true;
+    }
+
     private int[] getGameCell(String gameCell) {
-        String [] gameCellElements = gameCell.split("x");
-        int [] gameCellIndex = {Integer.valueOf(gameCellElements[0]), 
-                                Integer.valueOf(gameCellElements[1])};
+        String[] gameCellElements = gameCell.split("x");
+        int[] gameCellIndex = { Integer.valueOf(gameCellElements[0]), Integer.valueOf(gameCellElements[1]) };
         return gameCellIndex;
     }
 }
