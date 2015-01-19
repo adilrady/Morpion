@@ -26,5 +26,10 @@ public class Player {
     public String toString() {
         return name;
     }
+
+    public void print(StringBuilder builder) {
+        builder.append(this.playingChararcter);
+        
+    }
     
 }

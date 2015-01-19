@@ -34,8 +34,9 @@ public class Morpion {
 		}
 		if(freeCellCount != 0){
 		    return reportOngoingGame(freeCellCount);
+		}else{
+		    return "Game Over, equality";
 		}
-		return null;
 	}
 
 	private String reportGameOver() {
@@ -50,8 +51,7 @@ public class Morpion {
     }
 
     public String display() {
-		// TODO Auto-generated method stub
-		return null;
+		return game.display();
 	}
 
 }

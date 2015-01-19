@@ -82,19 +82,24 @@ public class Game {
             }
         }
         return true;
-        
-        //Second Diagonal to be moved to another method
-//        for (int i = 0; i < players.length; i++) {
-//            if(! players[i][players.length - 1 - i].equals(player)){
-//                return false;
-//            }
-//        }
-//        return true;
     }
 
     private int[] getGameCell(String gameCell) {
         String[] gameCellElements = gameCell.split("x");
         int[] gameCellIndex = { Integer.valueOf(gameCellElements[0]), Integer.valueOf(gameCellElements[1]) };
         return gameCellIndex;
+    }
+
+    public String display() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < players.length; i++) {
+            for (int j = 0; j < players[i].length; j++) {
+                players[i][j].print(builder);
+                builder.append("|");
+            }
+            builder.setLength(builder.length() - 1);
+            builder.append(Morpion.LINE_SEPARATOR);
+        }
+        return builder.toString();
     }
 }

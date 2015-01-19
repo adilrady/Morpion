@@ -34,7 +34,29 @@ public class MorpionTest {
 		game.play("player1", "2x2");
 		assertThat(game.report(), equalTo("Game Over, player1 is a winner"));
 	}
+	
+	@Test
+    public void winnerLine() {
+        Morpion game = new Morpion("3x3", "player1:X", "player2:O");
+        game.play("player1", "0x0");
+        game.play("player2", "1x1");
+        game.play("player1", "0x1");
+        game.play("player2", "2x2");
+        game.play("player1", "0x2");
+        assertThat(game.report(), equalTo("Game Over, player1 is a winner"));
+    }
 
+	@Test
+    public void winnerColumn() {
+        Morpion game = new Morpion("3x3", "player1:X", "player2:O");
+        game.play("player1", "0x0");
+        game.play("player2", "1x1");
+        game.play("player1", "1x0");
+        game.play("player2", "2x2");
+        game.play("player1", "2x0");
+        assertThat(game.report(), equalTo("Game Over, player1 is a winner"));
+    }
+	
 	@Test
 	public void displayEqualityGame() {
 		Morpion game = new Morpion("3x3", "player1:X", "player2:O");
@@ -47,11 +69,11 @@ public class MorpionTest {
 		game.play("player1", "1x2");
 		game.play("player2", "2x1");
 		game.play("player1", "2x2");
-		assertThat("Game Over, equality", equalTo(game.report()));
+		assertThat(game.report(), equalTo("Game Over, equality"));
 		String expectedDisplay = new StringBuilder().append("X|X|O")
-				.append(Morpion.LINE_SEPARATOR).append("O|O|X")
-				.append(Morpion.LINE_SEPARATOR).append("X|O|X")
-				.append(Morpion.LINE_SEPARATOR).toString();
-		assertThat(expectedDisplay.toString(), equalTo(game.display()));
+				     .append(Morpion.LINE_SEPARATOR).append("O|O|X")
+				     .append(Morpion.LINE_SEPARATOR).append("X|O|X")
+				     .append(Morpion.LINE_SEPARATOR).toString();
+		assertThat(game.display(), equalTo(expectedDisplay.toString()));
 	}
 }
